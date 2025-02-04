@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main  # 根据需要，修改为您的默认分支名称
+      
+permissions:
+  contents: write
+  packages: write
+  actions: write
 
 jobs:
   deploy:
