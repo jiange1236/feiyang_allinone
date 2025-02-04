@@ -51,12 +51,13 @@ jobs:
 
     - name: Git push assets to "release" branch
       run: |
+        echo "RELEASE_NAME=Released on $(date +%Y%m%d%H%M)" >> $GITHUB_ENV
         cd publish || exit 1
         git init
         git config --local user.name "github-actions[bot]"
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git checkout -b release
         git add .
-        git commit -m "Update assets for release"  # 添加有效的提交消息
+        git commit -m "${{ env.RELEASE_NAME }}"
         git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
         git push -f -u origin release
