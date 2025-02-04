@@ -30,9 +30,12 @@ jobs:
     - name: Download tv.m3u
       run: |
         curl -o tv.m3u http://localhost:35455/tv.m3u
+        mkdir -p publish
+        mv tv.m3u publish
 
     - name: Git push assets to "release" branch
       run: |
+        cd publish || exit 1
         git init
         git config --local user.name "github-actions[bot]"
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
