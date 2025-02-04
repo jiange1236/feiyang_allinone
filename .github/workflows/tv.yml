@@ -26,6 +26,7 @@ jobs:
       run: |
         echo "Waiting for the service to be available..."
         for i in {1..50}; do
+          docker logs allinone
           if curl --output /dev/null --silent --head --fail http://localhost:35455/tv.m3u; then
             echo "Service is up!"
             break
