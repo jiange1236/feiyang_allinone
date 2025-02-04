@@ -22,13 +22,21 @@ jobs:
         youshandefeiyang/allinone -tv=true -aesKey=${{ secrets.AESKEY }} \
         -userid=${{ secrets.USERID }} -token=${{ secrets.TOKEN }}
 
-    - name: Wait for the service to be up
+    - name: Wait for Docker service
       run: |
-        sleep 30 # 等待容器启动
+        echo "Waiting for the service to be available..."
+        for i in {1..20}; do
+          if curl --output /dev/null --silent --head --fail http://localhost:35455/tv.m3u; then
+            echo "Service is up!"
+            break
+          fi
+          echo "Service is not ready yet..."
+          sleep 5
+        done
 
     - name: Download tv.m3u
       run: |
-        curl -o tv.m3u http://127.0.0.1:35455/tv.m3u
+        curl -o tv.m3u http://localhost:35455/tv.m3u
 
     - name: Git push assets to "release" branch
       run: |
