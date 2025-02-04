@@ -41,8 +41,13 @@ jobs:
     - name: Download tv.m3u
       run: |
         curl -o tv.m3u http://localhost:35455/tv.m3u
+        curl -o bililive.m3u http://localhost:35455/bililive.m3u
+        curl -o huyayqk.m3u http://localhost:35455/huyayqk.m3u
+        curl -o douyuyqk.m3u http://localhost:35455/douyuyqk.m3u
+        curl -o yylunbo.m3u http://localhost:35455/yylunbo.m3u
         mkdir -p publish
-        mv tv.m3u publish
+        mv *.m3u publish
+        
 
     - name: Git push assets to "release" branch
       run: |
