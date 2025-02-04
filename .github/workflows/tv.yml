@@ -35,7 +35,7 @@ jobs:
     - name: Docker Run
       run: |
         docker run -d --restart always --privileged=true -p 35455:35455 --name allinone \
-        youshandefeiyang/allinone -tv=true -aesKey=${{ secrets.AESKEY }} \
+        youshandefeiyang/allinone -tv=false -aesKey=${{ secrets.AESKEY }} \
         -userid=${{ secrets.USERID }} -token=${{ secrets.TOKEN }}
 
     - name: Wait for the service to be up
