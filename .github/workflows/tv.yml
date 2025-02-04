@@ -21,6 +21,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Set variables
+      run: |
+          echo "RELEASE_NAME=Released on $(date +%Y%m%d%H%M)" >> $GITHUB_ENV
+      shell: bash
+          
     - name: Checkout code
       uses: actions/checkout@v4
     
@@ -51,7 +56,6 @@ jobs:
 
     - name: Git push assets to "release" branch
       run: |
-        echo "RELEASE_NAME=Released on $(date +%Y%m%d%H%M)" >> $GITHUB_ENV
         cd publish || exit 1
         git init
         git config --local user.name "github-actions[bot]"
