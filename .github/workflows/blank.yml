@@ -1,0 +1,42 @@
+name: Deploy Docker
+
+on:
+  push:
+    branches:
+      - main  # 根据需要，修改为您的默认分支名称
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Docker
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y docker.io
+        sudo systemctl start docker
+        sudo systemctl enable docker
+
+    - name: Docker Run
+      run: |
+        docker run -d --restart always --privileged=true -p 35455:35455 --name allinone \
+        youshandefeiyang/allinone -tv=true -aesKey=${{ secrets.AESKEY }} \
+        -userid=${{ secrets.USERID }} -token=${{ secrets.TOKEN }}
+
+    - name: Wait for the service to be up
+      run: |
+        sleep 30 # 等待容器启动
+
+    - name: Download tv.m3u
+      run: |
+        curl -o tv.m3u http://localhost:35455/tv.m3u
+
+    - name: Upload tv.m3u to repository
+      uses: mikeal/publish-to-github-action@v1
+      with:
+        files: tv.m3u
+        tag: latest
+        github_token: ${{ secrets.GITHUB_TOKEN }}
