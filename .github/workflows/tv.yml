@@ -28,7 +28,7 @@ jobs:
 
     - name: Download tv.m3u
       run: |
-        curl -o tv.m3u http://localhost:35455/tv.m3u
+        curl -o tv.m3u http://127.0.0.1:35455/tv.m3u
 
     - name: Git push assets to "release" branch
       run: |
