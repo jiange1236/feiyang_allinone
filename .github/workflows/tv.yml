@@ -1,4 +1,4 @@
-name: Deploy Docker
+name: Generate m3u from feiyang-IPTV
 
 on:
   workflow_dispatch:
